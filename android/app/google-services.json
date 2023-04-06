@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "884607479726",
+    "project_id": "show-runner-b7e70",
+    "storage_bucket": "show-runner-b7e70.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884607479726:android:ea2c30cb8a19478851223f",
+        "android_client_info": {
+          "package_name": "com.example.show_runner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884607479726-74ec82kmd3h6dhc03pk0lmpjrk24k4ig.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAS5qHBoyKwSPoq-UX2aAtluNF8B7IUAMk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884607479726-32bg2nett07bp2s4r4snds5nq56uo7f0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
