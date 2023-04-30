@@ -1,8 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:show_runner/auth/bloc/auth_bloc.dart';
 import 'package:show_runner/firebase_options.dart';
+import 'package:show_runner/repositories/abstract_authentication_repository.dart';
+import 'package:show_runner/repositories/abstract_database_repository.dart';
 import 'package:show_runner/repositories/authentication_repository.dart';
+import 'package:show_runner/repositories/database_repository.dart';
+import 'package:show_runner/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,54 +18,58 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  final AuthenticationRepository authenticationRepository = AuthenticationRepository(
-    firebaseAuth: FirebaseAuth.instance,
+  final DatabaseRepository databaseRepository = DatabaseRepository();
+
+  final AuthenticationRepository authenticationRepository =
+      AuthenticationRepository(
+    databaseRepository: databaseRepository,
   );
 
-  runApp(const MyApp());
+  runApp(
+    MyApp(
+      databaseRepository: databaseRepository,
+      authenticationRepository: authenticationRepository,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({
+    required AbstractDatabaseRepository databaseRepository,
+    required AbstractAuthenticationRepository authenticationRepository,
+    super.key,
+  })  : _databaseRepository = databaseRepository,
+        _authenticationRepository = authenticationRepository;
+
+  final AbstractDatabaseRepository _databaseRepository;
+  final AbstractAuthenticationRepository _authenticationRepository;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(create: (context) => _databaseRepository),
+        RepositoryProvider(create: (context) => _authenticationRepository),
+      ],
+      child: BlocProvider(
+        create: (context) =>
+            AuthBloc(authenticationRepository: _authenticationRepository),
+        child: const AppWidget(),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class AppWidget extends StatelessWidget {
+  const AppWidget({super.key});
 
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Login',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+    return MaterialApp(
+      title: 'Show Runner',
+      home: FlowBuilder<AppStatus>(
+        state: context.select((AuthBloc bloc) => bloc.state.appStatus),
+        onGeneratePages: onGenerateAppViewPages,
       ),
     );
   }
