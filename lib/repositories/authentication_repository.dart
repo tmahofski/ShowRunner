@@ -18,13 +18,48 @@ class AuthenticationRepository implements AbstractAuthenticationRepository {
   User currentUser = User.empty;
 
   @override
-  Future<void> login({required String email, required String password}) async {}
+  Future<void> login({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on Exception catch (_) {
+      // TODO: Handle exception
+      rethrow;
+    }
+  }
 
   @override
-  Future<void> logout() async {}
+  Future<void> logout() async {
+    try {
+      await _firebaseAuth.signOut();
+    } on Exception catch (_) {
+      // TODO: Handle exception
+      rethrow;
+    }
+  }
 
   @override
-  Future<void> signUp({required String username, required String email, required String password}) async {}
+  Future<void> signUp({
+    required String username,
+    required String email,
+    required String password,
+  }) async {
+    print('Sign up');
+    await _firebaseAuth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    await _firebaseAuth.currentUser?.updateDisplayName(username);
+    await _firebaseAuth.currentUser?.reload();
+    print('Sign up complete');
+    //TODO: Add user to database
+    // await _databaseRepository.addUserToDatabase(user: currentUser);
+  }
 
   @override
   Stream<User> get user {

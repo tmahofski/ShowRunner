@@ -9,5 +9,7 @@ List<Page> onGenerateAppViewPages(AppStatus status, List<Page<dynamic>> pages) {
       return [MainPage.page()];
     case AppStatus.unauthenticated:
       return [LoginPage.page()];
+
+    //TODO: Soon there will be authenticated and verified status
   }
 }

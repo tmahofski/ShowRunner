@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:show_runner/models/email.dart';
 import 'package:show_runner/models/password.dart';
@@ -12,35 +12,35 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       {required AbstractAuthenticationRepository authenticationRepository})
       : _authenticationRepository = authenticationRepository,
         super(const LoginInitial()) {
-    on<EmailChanged>(_emailChanged);
-    on<PasswordChanged>(_passwordChanged);
-    on<FormSubmitted>(_formSubmitted);
+    on<EmailChanged>(_onEmailChanged);
+    on<PasswordChanged>(_onPasswordChanged);
+    on<FormSubmitted>(_onFormSubmitted);
   }
 
   final AbstractAuthenticationRepository _authenticationRepository;
 
-  void _emailChanged(EmailChanged event, Emitter<LoginState> emit) {
+  void _onEmailChanged(EmailChanged event, Emitter<LoginState> emit) {
     emit(
       LoginInProgress(
-          email: Email(value: event.emailString),
+          email: Email(value: event.email),
           password: state.password,
           emailHasBeenChanged: true,
           passwordHasBeenChanged: state.passwordHasBeenChanged),
     );
   }
 
-  void _passwordChanged(PasswordChanged event, Emitter<LoginState> emit) {
+  void _onPasswordChanged(PasswordChanged event, Emitter<LoginState> emit) {
     emit(
       LoginInProgress(
         email: state.email,
-        password: Password(value: event.passwordString),
+        password: Password(value: event.password),
         emailHasBeenChanged: state.emailHasBeenChanged,
         passwordHasBeenChanged: true,
       ),
     );
   }
 
-  Future<void> _formSubmitted(
+  Future<void> _onFormSubmitted(
       FormSubmitted event, Emitter<LoginState> emit) async {
     emit(
       LoginSubmitting(
@@ -66,7 +66,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       await _authenticationRepository.login(
           email: state.email.value, password: state.password.value);
       emit(
-        LoginDone(email: state.email, password: state.password),
+        LoginComplete(email: state.email, password: state.password),
       );
     } on Exception catch (_) {
       emit(

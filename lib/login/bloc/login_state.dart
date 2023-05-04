@@ -65,8 +65,8 @@ class LoginSubmitting extends LoginState {
       ];
 }
 
-class LoginDone extends LoginState {
-  const LoginDone({
+class LoginComplete extends LoginState {
+  const LoginComplete({
     required super.email,
     required super.password,
     super.emailHasBeenChanged = true,

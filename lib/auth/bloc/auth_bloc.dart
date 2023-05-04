@@ -23,6 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   late final StreamSubscription<User> _userSubscription;
 
   void _onUserChanged(UserChanged event, Emitter<AuthState> emit) {
+    print('User changed');
     event.user.isNotEmpty
         ? emit(AuthState.authenticated(event.user))
         : emit(const AuthState.unauthenticated());
