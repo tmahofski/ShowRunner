@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:show_runner/repositories/abstract_authentication_repository.dart';
 import 'package:show_runner/sign_up/bloc/sign_up_bloc.dart';
 
 class SignUpPage extends StatelessWidget {
+  static String path = '/signup';
+  static String name = 'signup';
   static Route<void> route() {
     return MaterialPageRoute(builder: (_) => const SignUpPage());
   }
@@ -30,7 +33,7 @@ class SignUpListener extends StatelessWidget {
     return BlocListener<SignUpBloc, SignUpState>(
       listener: (context, state) {
         if (state is SignUpComplete) {
-          Navigator.of(context).pop();
+          // Navigator.of(context).pop();
         }
       },
       child: const SignUpBuilder(),
@@ -97,11 +100,18 @@ class SignUpBuilder extends StatelessWidget {
                   ),
                   const Spacer(),
                   ElevatedButton(
-                    child: const Text('Submitted'),
+                    child: const Text('Submit'),
                     onPressed: () {
                       context.read<SignUpBloc>().add(FormSubmitted());
                     },
                   ),
+                  TextButton(
+                    onPressed: () {
+                      context.go('/login');
+                    },
+                    child: const Text('Already have an account?'),
+                  ),
+                  const Spacer(),
                 ],
               ),
             );
