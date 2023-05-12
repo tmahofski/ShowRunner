@@ -50,18 +50,20 @@ class _AppWidgetState extends State<AppWidget> {
           GoRoute(
             path: '/',
             builder: (context, state) => const SplashPage(),
-          ),
-          GoRoute(
-            path: '/login',
-            builder: (context, state) => const LoginPage(),
-          ),
-          GoRoute(
-            path: '/signup',
-            builder: (context, state) => const SignUpPage(),
-          ),
-          GoRoute(
-            path: '/main',
-            builder: (context, state) => const MainPage(),
+            routes: <GoRoute>[
+              GoRoute(
+                path: 'login',
+                builder: (context, state) => const LoginPage(),
+              ),
+              GoRoute(
+                path: 'signup',
+                builder: (context, state) => const SignUpPage(),
+              ),
+              GoRoute(
+                path: 'main',
+                builder: (context, state) => const MainPage(),
+              ),
+            ],
           ),
         ],
         redirect: (context, state) {
@@ -70,11 +72,12 @@ class _AppWidgetState extends State<AppWidget> {
           final isLoggingIn = state.location == '/login';
           final isSigningUp = state.location == '/signup';
 
+          print('Running redirect function');
           print('Is Logged In: $isLoggedIn');
 
-          if (isSigningUp) return '/signup';
+          if (isSigningUp) return 'signup';
 
-          if (!isLoggedIn && !isLoggingIn) return '/login';
+          if (!isLoggedIn && !isLoggingIn) return 'login';
 
           if (isLoggedIn) {
             print('Is logged in');
