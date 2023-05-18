@@ -83,14 +83,13 @@ class LoginBuilder extends StatelessWidget {
                 ),
                 const Spacer(),
                 ElevatedButton(
-                  child: const Text('Submitted'),
+                  child: const Text('Login'),
                   onPressed: () {
                     context.read<LoginBloc>().add(const FormSubmitted());
                   },
                 ),
                 TextButton(
                   onPressed: () {
-                    // Navigator.of(context).push<void>(SignUpPage.route());
                     context.go('/signup');
                   },
                   child: const Text('Don\'t have an account?'),

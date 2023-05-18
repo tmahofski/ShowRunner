@@ -32,9 +32,7 @@ class SignUpListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<SignUpBloc, SignUpState>(
       listener: (context, state) {
-        if (state is SignUpComplete) {
-          // Navigator.of(context).pop();
-        }
+        if (state is SignUpComplete) {}
       },
       child: const SignUpBuilder(),
     );
