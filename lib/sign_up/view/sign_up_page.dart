@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:show_runner/navigation/routes.dart';
 import 'package:show_runner/repositories/abstract_authentication_repository.dart';
 import 'package:show_runner/sign_up/bloc/sign_up_bloc.dart';
 
@@ -99,7 +100,7 @@ class SignUpBuilder extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      context.go('/login');
+                      context.go(kLoginPath);
                     },
                     child: const Text('Already have an account?'),
                   ),
