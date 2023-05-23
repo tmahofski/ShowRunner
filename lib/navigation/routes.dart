@@ -1,3 +1,7 @@
+//* Initial Route Information
+
+const String kInitialRoute = '/';
+
 //* Login Information
 
 const String kLoginPath = '/login';

@@ -13,10 +13,10 @@ import 'package:show_runner/splash/view/splash_page.dart';
 class AppRouter {
   static GoRouter generateRouter(Stream<AuthState> authStream) {
     return GoRouter(
-      initialLocation: '/',
+      initialLocation: kInitialRoute,
       routes: [
         GoRoute(
-          path: '/',
+          path: kInitialRoute,
           builder: (context, state) => const SplashPage(),
           routes: <GoRoute>[
             GoRoute(
