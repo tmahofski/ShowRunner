@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:show_runner/auth/bloc/auth_bloc.dart';
 import 'package:show_runner/login/view/login_page.dart';
 import 'package:show_runner/main/view/main_page.dart';
+import 'package:show_runner/navigation/routes.dart';
 import 'package:show_runner/sign_up/view/sign_up_page.dart';
 import 'package:show_runner/splash/view/splash_page.dart';
 
@@ -19,17 +20,17 @@ class AppRouter {
           builder: (context, state) => const SplashPage(),
           routes: <GoRoute>[
             GoRoute(
-              path: 'login',
+              path: kLoginName,
               builder: (context, state) => const LoginPage(),
             ),
             GoRoute(
-              path: 'signup',
+              path: kSignUpName,
               builder: (context, state) => const SignUpPage(),
             ),
           ],
         ),
         GoRoute(
-          path: '/main',
+          path: kMainPath,
           builder: (context, state) => const MainPage(),
           routes: const <GoRoute>[],
         ),
@@ -37,8 +38,8 @@ class AppRouter {
       redirect: (context, state) {
         final isAuthenticated =
             context.read<AuthBloc>().state.appStatus == AppStatus.authenticated;
-        final isLoggingIn = state.location == '/login';
-        final isSigningUp = state.location == '/signup';
+        final isLoggingIn = state.location == kLoginPath;
+        final isSigningUp = state.location == kSignUpPath;
 
         if (!isAuthenticated) {
           if (isLoggingIn) {
@@ -47,11 +48,11 @@ class AppRouter {
           if (isSigningUp) {
             return state.location;
           }
-          return '/login';
+          return kLoginPath;
         }
 
         if (isAuthenticated) {
-          return '/main';
+          return kMainPath;
         }
 
         return null;

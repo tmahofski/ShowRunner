@@ -6,10 +6,6 @@ import 'package:show_runner/login/bloc/login_bloc.dart';
 import 'package:show_runner/repositories/abstract_authentication_repository.dart';
 
 class LoginPage extends StatelessWidget {
-  static String path = '/login';
-  static String name = 'login';
-  static Page<void> page() => const MaterialPage<void>(child: LoginPage());
-
   const LoginPage({super.key});
 
   @override
