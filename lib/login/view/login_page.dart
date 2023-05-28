@@ -87,7 +87,7 @@ class LoginBuilder extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    context.go(kSignUpPath);
+                    context.go(kMainPath);
                   },
                   child: const Text('Don\'t have an account?'),
                 ),

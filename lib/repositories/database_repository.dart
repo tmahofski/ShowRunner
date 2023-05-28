@@ -6,4 +6,28 @@ class DatabaseRepository implements AbstractDatabaseRepository {
       : _database = database ?? FirebaseFirestore.instance;
 
   final FirebaseFirestore _database;
+
+  @override
+  Future<void> addShowToDatabase() {
+    // TODO: implement addShowToDatabase
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteShowFromDatabase(String showId) {
+    // TODO: implement deleteShowFromDatabase
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> getAllShowsFromDatabase() {
+    // TODO: implement getAllShowsFromDatabase
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> updateShowInDatabase(String showId) {
+    // TODO: implement updateShowInDatabase
+    throw UnimplementedError();
+  }
 }

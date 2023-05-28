@@ -38,8 +38,8 @@ class AppRouter {
       redirect: (context, state) {
         final isAuthenticated =
             context.read<AuthBloc>().state.appStatus == AppStatus.authenticated;
-        final isLoggingIn = state.location == kLoginPath;
-        final isSigningUp = state.location == kSignUpPath;
+        final bool isLoggingIn = state.location == kLoginPath;
+        final bool isSigningUp = state.location == kSignUpPath;
 
         if (!isAuthenticated) {
           if (isLoggingIn) {

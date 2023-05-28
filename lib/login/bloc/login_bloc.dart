@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:show_runner/models/email.dart';
-import 'package:show_runner/models/password.dart';
+import 'package:show_runner/models/login_models/email.dart';
+import 'package:show_runner/models/login_models/password.dart';
 import 'package:show_runner/repositories/abstract_authentication_repository.dart';
 
 part 'login_event.dart';
