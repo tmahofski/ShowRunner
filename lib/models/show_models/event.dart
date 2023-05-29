@@ -28,6 +28,17 @@ class Event extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+
+    json['name'] = name;
+    json['requirements'] = requirements;
+    json['description'] = description;
+    json['ring'] = ring.toJson();
+
+    return json;
+  }
+
   @override
   List<Object?> get props => [
         name,

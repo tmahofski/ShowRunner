@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -112,9 +114,26 @@ class MainBloc extends Bloc<MainEvent, MainState> {
         super(MainInitial(
           upcomingShows: tempShows,
         )) {
-    on<MainEvent>((event, emit) {});
+    on<AddShow>(_onAddShow);
+    on<GetAllShows>(_onGetAllShows);
   }
 
   //TODO: Setup listener to database to display upcoming shows
   final AbstractDatabaseRepository _databaseRepository;
+
+  Future<void> _onAddShow(AddShow event, Emitter<MainState> emit) async {
+    try {
+      print('adding to db');
+      await _databaseRepository.addShowToDatabase(show: event.show);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _onGetAllShows(
+      GetAllShows event, Emitter<MainState> emit) async {
+    List<Show> shows = await _databaseRepository.getAllShowsFromDatabase();
+
+    shows.forEach(print);
+  }
 }

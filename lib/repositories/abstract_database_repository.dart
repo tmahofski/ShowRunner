@@ -1,13 +1,21 @@
+import 'package:show_runner/models/show_models/show.dart';
+
 abstract class AbstractDatabaseRepository {
   //* Create
-  Future<void> addShowToDatabase();
+  Future<void> addShowToDatabase({
+    required Show show,
+  });
 
   //* Read
-  Future<void> getAllShowsFromDatabase();
+  Future<List<Show>> getAllShowsFromDatabase();
 
   //* Update
-  Future<void> updateShowInDatabase(String showId);
+  Future<void> updateShowInDatabase({
+    required Show show,
+  });
 
   //* Delete
-  Future<void> deleteShowFromDatabase(String showId);
+  Future<void> deleteShowFromDatabase({
+    required Show show,
+  });
 }

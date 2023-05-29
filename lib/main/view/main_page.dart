@@ -7,8 +7,6 @@ import 'package:show_runner/repositories/abstract_database_repository.dart';
 import 'package:show_runner/widgets/show_page_widgets/show_list_tile.dart';
 
 class MainPage extends StatelessWidget {
-  static Page<void> page() => const MaterialPage<void>(child: MainPage());
-
   const MainPage({super.key});
 
   @override
@@ -40,42 +38,59 @@ class MainPageBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Main Page'),
-          actions: [
-            BlocBuilder<AuthBloc, AuthState>(
-              builder: (context, state) {
-                return IconButton(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(LogoutRequested());
-                  },
-                  icon: const Icon(
-                    Icons.logout_rounded,
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-        body: BlocBuilder<MainBloc, MainState>(
-          builder: (context, state) {
-            if (state is MainInitial) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child:
-                        _generateListView(upcomingShows: state.upcomingShows),
-                  ),
-                ],
+      appBar: AppBar(
+        title: const Text('Main Page'),
+        actions: [
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              return IconButton(
+                onPressed: () {
+                  context.read<AuthBloc>().add(LogoutRequested());
+                },
+                icon: const Icon(
+                  Icons.logout_rounded,
+                ),
               );
-            }
-            return const CircularProgressIndicator();
-          },
-        ),
-        floatingActionButton: CustomFloatingActionButton(
-          onTap: () {},
-        ));
+            },
+          ),
+          BlocBuilder<MainBloc, MainState>(builder: (context, state) {
+            //Note: This is a test for database interations
+            return IconButton(
+              onPressed: () {
+                context.read<MainBloc>().add(const GetAllShows());
+              },
+              icon: const Icon(Icons.read_more),
+            );
+          }),
+        ],
+      ),
+      body: BlocBuilder<MainBloc, MainState>(
+        builder: (context, state) {
+          if (state is MainInitial) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: _generateListView(upcomingShows: state.upcomingShows),
+                ),
+              ],
+            );
+          }
+          return const CircularProgressIndicator();
+        },
+      ),
+      floatingActionButton: BlocBuilder<MainBloc, MainState>(
+        builder: (context, state) {
+          return CustomFloatingActionButton(
+            onTap: () {
+              context.read<MainBloc>().add(AddShow(
+                    show: tempShows[0],
+                  ));
+            },
+          );
+        },
+      ),
+    );
   }
 
   Widget _generateListView({
@@ -103,7 +118,7 @@ class CustomFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => onTap,
+      onTap: onTap,
       child: Material(
         elevation: 20,
         borderRadius: BorderRadius.circular(15),

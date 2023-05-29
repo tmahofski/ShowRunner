@@ -19,6 +19,15 @@ class Ring extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+
+    json['name'] = name;
+    json['description'] = description;
+
+    return json;
+  }
+
   @override
   List<Object?> get props => [
         name,
