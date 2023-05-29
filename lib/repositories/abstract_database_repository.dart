@@ -9,6 +9,8 @@ abstract class AbstractDatabaseRepository {
   //* Read
   Future<List<Show>> getAllShowsFromDatabase();
 
+  Stream<List<Show>> showStream();
+
   //* Update
   Future<void> updateShowInDatabase({
     required Show show,

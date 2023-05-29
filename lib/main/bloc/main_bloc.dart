@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:show_runner/models/show_models/show.dart';
@@ -9,104 +8,7 @@ import 'package:show_runner/repositories/abstract_database_repository.dart';
 part 'main_event.dart';
 part 'main_state.dart';
 
-List<Show> tempShows = [
-  Show(
-    name: 'Temp Name 1',
-    description: 'Temp Description 1',
-    startDate: DateTime.now(),
-    startTime: TimeOfDay.now(),
-    endDate: DateTime.now(),
-    endTime: TimeOfDay.now(),
-    staff: [],
-    rings: [],
-    events: [],
-    attendees: [],
-  ),
-  Show(
-    name: 'Temp Name 1',
-    description: 'Temp Description 1',
-    startDate: DateTime.now(),
-    startTime: TimeOfDay.now(),
-    endDate: DateTime.now(),
-    endTime: TimeOfDay.now(),
-    staff: [],
-    rings: [],
-    events: [],
-    attendees: [],
-  ),
-  Show(
-    name: 'Temp Name 1',
-    description: 'Temp Description 1',
-    startDate: DateTime.now(),
-    startTime: TimeOfDay.now(),
-    endDate: DateTime.now(),
-    endTime: TimeOfDay.now(),
-    staff: [],
-    rings: [],
-    events: [],
-    attendees: [],
-  ),
-  Show(
-    name: 'Temp Name 1',
-    description: 'Temp Description 1',
-    startDate: DateTime.now(),
-    startTime: TimeOfDay.now(),
-    endDate: DateTime.now(),
-    endTime: TimeOfDay.now(),
-    staff: [],
-    rings: [],
-    events: [],
-    attendees: [],
-  ),
-  Show(
-    name: 'Temp Name 1',
-    description: 'Temp Description 1',
-    startDate: DateTime.now(),
-    startTime: TimeOfDay.now(),
-    endDate: DateTime.now(),
-    endTime: TimeOfDay.now(),
-    staff: [],
-    rings: [],
-    events: [],
-    attendees: [],
-  ),
-  Show(
-    name: 'Temp Name 1',
-    description: 'Temp Description 1',
-    startDate: DateTime.now(),
-    startTime: TimeOfDay.now(),
-    endDate: DateTime.now(),
-    endTime: TimeOfDay.now(),
-    staff: [],
-    rings: [],
-    events: [],
-    attendees: [],
-  ),
-  Show(
-    name: 'Temp Name 1',
-    description: 'Temp Description 1',
-    startDate: DateTime.now(),
-    startTime: TimeOfDay.now(),
-    endDate: DateTime.now(),
-    endTime: TimeOfDay.now(),
-    staff: [],
-    rings: [],
-    events: [],
-    attendees: [],
-  ),
-  Show(
-    name: 'Temp Name 1',
-    description: 'Temp Description 1',
-    startDate: DateTime.now(),
-    startTime: TimeOfDay.now(),
-    endDate: DateTime.now(),
-    endTime: TimeOfDay.now(),
-    staff: [],
-    rings: [],
-    events: [],
-    attendees: [],
-  ),
-];
+List<Show> tempShows = [];
 
 class MainBloc extends Bloc<MainEvent, MainState> {
   MainBloc({required AbstractDatabaseRepository databaseRepository})
@@ -114,12 +16,23 @@ class MainBloc extends Bloc<MainEvent, MainState> {
         super(MainInitial(
           upcomingShows: tempShows,
         )) {
+    _showSubscription = _databaseRepository.showStream().listen((event) {
+      add(ReloadShows(shows: event));
+    });
+
     on<AddShow>(_onAddShow);
     on<GetAllShows>(_onGetAllShows);
+    on<ReloadShows>(_onReloadShows);
   }
 
-  //TODO: Setup listener to database to display upcoming shows
   final AbstractDatabaseRepository _databaseRepository;
+  late final StreamSubscription<List<Show>> _showSubscription;
+
+  @override
+  Future<void> close() {
+    _showSubscription.cancel();
+    return super.close();
+  }
 
   Future<void> _onAddShow(AddShow event, Emitter<MainState> emit) async {
     try {
@@ -133,7 +46,9 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   Future<void> _onGetAllShows(
       GetAllShows event, Emitter<MainState> emit) async {
     List<Show> shows = await _databaseRepository.getAllShowsFromDatabase();
+  }
 
-    shows.forEach(print);
+  void _onReloadShows(ReloadShows event, Emitter<MainState> emit) {
+    emit(MainInitial(upcomingShows: event.shows));
   }
 }

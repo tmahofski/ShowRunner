@@ -59,10 +59,24 @@ class DatabaseRepository implements AbstractDatabaseRepository {
         .set(show.toJson());
   }
 
-  Stream<Show> showStream() {
-    return _database
-        .collection(showCollectionPath)
-        .snapshots()
-        .map((event) => null);
+  @override
+  Stream<List<Show>> showStream() {
+    return _database.collection(showCollectionPath).snapshots().map((event) {
+      List<Show> shows = [];
+      for (QueryDocumentSnapshot<Map<String, dynamic>> doc in event.docs) {
+        Map<String, dynamic> json = doc.data();
+
+        shows.add(
+          Show.fromJson(json),
+        );
+      }
+
+      return shows;
+    });
+    // return _database
+    //     .collection(showCollectionPath)
+    //     .get()
+    //     .asStream()
+    //     .map((event) => Show.fromJson(event));
   }
 }

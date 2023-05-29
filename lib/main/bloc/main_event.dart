@@ -22,3 +22,14 @@ class GetAllShows extends MainEvent {
   @override
   List<Object> get props => super.props;
 }
+
+class ReloadShows extends MainEvent {
+  const ReloadShows({
+    required this.shows,
+  });
+
+  final List<Show> shows;
+
+  @override
+  List<Object> get props => [shows];
+}

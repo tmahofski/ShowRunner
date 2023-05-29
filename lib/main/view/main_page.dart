@@ -6,6 +6,19 @@ import 'package:show_runner/models/show_models/show.dart';
 import 'package:show_runner/repositories/abstract_database_repository.dart';
 import 'package:show_runner/widgets/show_page_widgets/show_list_tile.dart';
 
+Show tempShow = Show(
+  name: 'Temp Name 1',
+  description: 'Temp Description 1',
+  startDate: DateTime.now(),
+  startTime: TimeOfDay.now(),
+  endDate: DateTime.now(),
+  endTime: TimeOfDay.now(),
+  staff: [],
+  rings: [],
+  events: [],
+  attendees: [],
+);
+
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
 
@@ -84,7 +97,7 @@ class MainPageBuilder extends StatelessWidget {
           return CustomFloatingActionButton(
             onTap: () {
               context.read<MainBloc>().add(AddShow(
-                    show: tempShows[0],
+                    show: tempShow,
                   ));
             },
           );
