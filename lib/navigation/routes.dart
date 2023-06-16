@@ -16,3 +16,6 @@ const String kSignUpName = 'signup';
 
 const String kMainPath = '/main';
 const String kMainName = 'main';
+
+const String kCreatingShowPath = '/createShow';
+const String kCreatingShowName = 'createShow';

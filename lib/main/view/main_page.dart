@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:show_runner/auth/bloc/auth_bloc.dart';
 import 'package:show_runner/main/bloc/main_bloc.dart';
 import 'package:show_runner/models/show_models/show.dart';
+import 'package:show_runner/navigation/routes.dart';
 import 'package:show_runner/repositories/abstract_database_repository.dart';
 import 'package:show_runner/widgets/show_page_widgets/show_list_tile.dart';
 
@@ -96,9 +98,10 @@ class MainPageBuilder extends StatelessWidget {
         builder: (context, state) {
           return CustomFloatingActionButton(
             onTap: () {
-              context.read<MainBloc>().add(AddShow(
-                    show: tempShow,
-                  ));
+              // context.read<MainBloc>().add(AddShow(
+              //       show: tempShow,
+              //     ));
+              context.go(kCreatingShowPath);
             },
           );
         },

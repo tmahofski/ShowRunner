@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:show_runner/auth/bloc/auth_bloc.dart';
+import 'package:show_runner/create_show/bloc/create_show_bloc.dart';
+import 'package:show_runner/create_show/view/create_show_page.dart';
 import 'package:show_runner/login/view/login_page.dart';
 import 'package:show_runner/main/view/main_page.dart';
 import 'package:show_runner/navigation/routes.dart';
@@ -34,12 +36,19 @@ class AppRouter {
           builder: (context, state) => const MainPage(),
           routes: const <GoRoute>[],
         ),
+        GoRoute(
+          path: kCreatingShowPath,
+          builder: (context, state) => const CreateShowPage(),
+        )
       ],
       redirect: (context, state) {
         final isAuthenticated =
             context.read<AuthBloc>().state.appStatus == AppStatus.authenticated;
         final bool isLoggingIn = state.location == kLoginPath;
         final bool isSigningUp = state.location == kSignUpPath;
+
+        final bool isOnMainPage = state.location == kMainPath;
+        final bool isCreatingNewShow = state.location == kCreatingShowPath;
 
         if (!isAuthenticated) {
           if (isLoggingIn) {
@@ -52,6 +61,13 @@ class AppRouter {
         }
 
         if (isAuthenticated) {
+          if (isOnMainPage) {
+            return kMainPath;
+          }
+
+          if (isCreatingNewShow) {
+            return kCreatingShowPath;
+          }
           return kMainPath;
         }
 

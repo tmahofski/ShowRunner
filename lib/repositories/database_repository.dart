@@ -14,9 +14,11 @@ class DatabaseRepository implements AbstractDatabaseRepository {
   Future<void> addShowToDatabase({
     required Show show,
   }) async {
+    print('Here1');
     DocumentReference ref =
         await _database.collection(showCollectionPath).add(show.toJson());
     //Note: this is how to get the doc id if we need in the future.
+    print('Here2');
     String showId = ref.id;
     Show updatedShow = show.copyWith(id: showId);
     await updateShowInDatabase(
