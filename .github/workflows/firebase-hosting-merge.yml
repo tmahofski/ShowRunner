@@ -9,6 +9,7 @@ name: Deploy to Firebase Hosting on merge
 
 jobs:
   build_and_deploy:
+    permissions: write-all
     runs-on: ubuntu-latest
     env:
       FLUTTER_VERSION: "3.7.9"
@@ -16,7 +17,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: $
+          flutter-version: $FLUTTER_VERSION
       - run: flutter pub get
       - run: flutter build web
       - uses: FirebaseExtended/action-hosting-deploy@v0
@@ -25,3 +26,5 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_SHOW_RUNNER_B7E70 }}"
           channelId: live
           projectId: show-runner-b7e70
+        env:
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
