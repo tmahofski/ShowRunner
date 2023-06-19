@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:show_runner/login/bloc/login_bloc.dart';
+import 'package:show_runner/navigation/routes.dart';
 import 'package:show_runner/repositories/abstract_authentication_repository.dart';
-import 'package:show_runner/sign_up/view/sign_up_page.dart';
 
 class LoginPage extends StatelessWidget {
-  static Page<void> page() => const MaterialPage<void>(child: LoginPage());
-
   const LoginPage({super.key});
 
   @override
@@ -81,14 +80,14 @@ class LoginBuilder extends StatelessWidget {
                 ),
                 const Spacer(),
                 ElevatedButton(
-                  child: const Text('Submitted'),
+                  child: const Text('Login'),
                   onPressed: () {
                     context.read<LoginBloc>().add(const FormSubmitted());
                   },
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).push<void>(SignUpPage.route());
+                    context.go(kSignUpPath);
                   },
                   child: const Text('Don\'t have an account?'),
                 ),
