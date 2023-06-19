@@ -23,3 +23,5 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_SHOW_RUNNER_B7E70 }}"
           projectId: show-runner-b7e70
+        env:
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
