@@ -7,6 +7,10 @@ abstract class SignUpEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class UsernameUnFocused extends SignUpEvent {}
+
+class UsernameFocused extends SignUpEvent {}
+
 class UsernameChanged extends SignUpEvent {
   const UsernameChanged({
     required this.username,
@@ -18,6 +22,10 @@ class UsernameChanged extends SignUpEvent {
   List<Object> get props => [username];
 }
 
+class EmailUnFocused extends SignUpEvent {}
+
+class EmailFocused extends SignUpEvent {}
+
 class EmailChanged extends SignUpEvent {
   const EmailChanged({
     required this.email,
@@ -28,6 +36,10 @@ class EmailChanged extends SignUpEvent {
   @override
   List<Object> get props => [email];
 }
+
+class PasswordFocused extends SignUpEvent {}
+
+class PasswordUnFocused extends SignUpEvent {}
 
 class PasswordChanged extends SignUpEvent {
   const PasswordChanged({

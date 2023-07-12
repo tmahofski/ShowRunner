@@ -16,3 +16,6 @@ const String kSignUpName = 'signup';
 
 const String kMainPath = '/main';
 const String kMainName = 'main';
+
+const String kExamplePath = '/example';
+const String kExampleName = 'exampleName';
