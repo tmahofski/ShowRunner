@@ -24,8 +24,8 @@ abstract class LoginState extends Equatable {
 
 class LoginInitial extends LoginState {
   const LoginInitial({
-    super.email = const Email(value: ''),
-    super.password = const Password(value: ''),
+    super.email = const Email(value: '', isDirty: false, hasFocus: false),
+    super.password = const Password(value: '', isDirty: false, hasFocus: false),
     super.emailHasBeenChanged = false,
     super.passwordHasBeenChanged = false,
   });

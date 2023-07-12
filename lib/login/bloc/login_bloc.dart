@@ -22,7 +22,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   void _onEmailChanged(EmailChanged event, Emitter<LoginState> emit) {
     emit(
       LoginInProgress(
-          email: Email(value: event.email),
+          email: Email(
+              value: event.email,
+              isDirty: state.email.isDirty,
+              hasFocus: state.email.hasFocus),
           password: state.password,
           emailHasBeenChanged: true,
           passwordHasBeenChanged: state.passwordHasBeenChanged),
@@ -33,7 +36,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(
       LoginInProgress(
         email: state.email,
-        password: Password(value: event.password),
+        password: Password(
+            value: event.password,
+            isDirty: state.password.isDirty,
+            hasFocus: state.password.hasFocus),
         emailHasBeenChanged: state.emailHasBeenChanged,
         passwordHasBeenChanged: true,
       ),

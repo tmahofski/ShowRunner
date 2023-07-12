@@ -52,7 +52,7 @@ class AppRouter {
         }
 
         if (isAuthenticated) {
-          return kMainPath;
+          return state.location;
         }
 
         return null;
